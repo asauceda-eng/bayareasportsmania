@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bay Area Sports Mania</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue: #5BC8F5;
+      --blue-light: #E8F7FD;
+      --blue-dark: #0A4F72;
+      --blue-mid: #3A7FA0;
+      --coral: #FF6B6B;
+      --coral-light: #FFEAEA;
+      --mint: #7ED8A4;
+      --mint-light: #E8F8EF;
+      --amber: #FFB347;
+      --amber-light: #FFF3E0;
+      --white: #ffffff;
+      --off-white: #F0FBFF;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--white);
+      color: var(--blue-dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--blue);
+      padding: 0 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 20px rgba(91,200,245,0.3);
+    }
+
+    .nav-logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 1px;
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: #FFE600; }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: #FFE600; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--blue-light);
+      padding: 80px 40px 70px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      background: rgba(91,200,245,0.15);
+      border-radius: 50%;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 200px; height: 200px;
+      background: rgba(255,107,107,0.1);
+      border-radius: 50%;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 30px;
+      margin-bottom: 24px;
+      animation: fadeDown 0.6s ease both;
+    }
+
+    .hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(36px, 6vw, 60px);
+      font-weight: 700;
+      color: var(--blue-dark);
+      line-height: 1.1;
+      margin-bottom: 16px;
+      animation: fadeUp 0.7s ease 0.1s both;
+    }
+
+    .hero h1 span { color: var(--coral); }
+
+    .hero p {
+      color: var(--blue-mid);
+      font-size: 17px;
+      margin-bottom: 32px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+      font-weight: 600;
+      animation: fadeUp 0.7s ease 0.2s both;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.7s ease 0.3s both;
+    }
+
+    .btn {
+      padding: 14px 30px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-primary { background: var(--blue); color: #fff; }
+    .btn-secondary { background: var(--coral); color: #fff; }
+    .btn-outline { background: transparent; color: var(--blue-dark); border: 2px solid var(--blue); }
+
+    /* ── AGE PILLS ── */
+    .age-bar {
+      background: var(--blue);
+      padding: 14px 40px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .age-pill {
+      background: #fff;
+      color: var(--blue-dark);
+      font-size: 13px;
+      font-weight: 800;
+      padding: 6px 16px;
+      border-radius: 20px;
+      animation: popIn 0.4s ease both;
+    }
+
+    /* ── STATS ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: #fff;
+      border-bottom: 3px solid var(--blue-light);
+    }
+
+    .stat {
+      text-align: center;
+      padding: 24px 12px;
+      border-right: 2px solid var(--blue-light);
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: 'Oswald', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--blue);
+      display: block;
+    }
+
+    .stat-lbl {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--blue-mid);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 60px 40px; }
+
+    .section-tag {
+      display: inline-block;
+      background: var(--blue-light);
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(26px, 4vw, 36px);
+      font-weight: 700;
+      color: var(--blue-dark);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .section-sub {
+      font-size: 15px;
+      color: var(--blue-mid);
+      font-weight: 600;
+      margin-bottom: 40px;
+    }
+
+    .text-center { text-align: center; }
+
+    /* ── SPORTS CARDS ── */
+    .sports { background: var(--off-white); }
+
+    .sport-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .sport-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px 20px;
+      border: 2px solid var(--blue-light);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .sport-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .sport-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(91,200,245,0.2);
+      border-color: var(--blue);
+    }
+
+    .sport-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+    }
+
+    .sport-card h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--blue-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .sport-card p {
+      font-size: 14px;
+      color: #5a8fa0;
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .age-tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      align-self: flex-start;
+    }
+
+    /* ── MISSION ── */
+    .mission {
+      background: #fff;
+      display: flex;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .mission-text { flex: 1; }
+    .mission-visual {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .mission-card {
+      background: var(--blue-light);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .mission-card .icon { font-size: 32px; margin-bottom: 8px; }
+    .mission-card h4 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--blue-dark);
+      text-transform: uppercase;
+    }
+
+    .mission-card p { font-size: 12px; color: var(--blue-mid); font-weight: 600; margin-top: 4px; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { background: var(--blue-light); }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .testimonial-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      border-left: 4px solid var(--blue);
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+
+    .testimonial-card.visible {
+      opacity: 1;
+      transform: translateX(0);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .testimonial-card p {
+      font-size: 14px;
+      color: #3a5a6a;
+      line-height: 1.7;
+      font-style: italic;
+      margin-bottom: 14px;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .author-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .author-name { font-size: 13px; font-weight: 800; color: var(--blue-dark); }
+    .author-role { font-size: 11px; color: var(--blue-mid); font-weight: 600; }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--blue);
+      text-align: center;
+      padding: 70px 40px;
+    }
+
+    .cta-section h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .cta-section p {
+      color: rgba(255,255,255,0.9);
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 28px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .contact-chip {
+      background: #fff;
+      color: var(--blue-dark);
+      font-size: 14px;
+      font-weight: 800;
+      padding: 10px 22px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--blue-dark);
+      padding: 28px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--blue);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--blue); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      font-weight: 600;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.85); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 60px 20px 50px; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      section { padding: 50px 20px; }
+      .mission { flex-direction: column; gap: 30px; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">BAY AREA <span>SPORTS</span> MANIA</a>
+    <ul class="nav-links">
+      <li><a href="#programs">Programs</a></li>
+      <li><a href="#mission">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#contact" class="btn btn-secondary" style="padding:8px 20px;font-size:13px;">Join Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">📍 San Jose, CA — Est. 2024</div>
+    <h1>Every Kid Deserves<br>Their <span>Moment.</span></h1>
+    <p>Thrilling sports experiences for ages 4–17. Fun, inclusive, and built for the entire Bay Area community.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn btn-primary">Sign Up Now</a>
+      <a href="#programs" class="btn btn-secondary">View Programs</a>
+      <a href="#mission" class="btn btn-outline">Learn More</a>
+    </div>
+  </div>
+
+  <!-- AGE BAR -->
+  <div class="age-bar">
+    <div class="age-pill">⚡ Ages 4–6</div>
+    <div class="age-pill">🏃 Ages 7–10</div>
+    <div class="age-pill">🏈 Ages 11–13</div>
+    <div class="age-pill">🏆 Ages 14–17</div>
+    <div class="age-pill">👥 Adults Welcome</div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><span class="stat-num">4+</span><span class="stat-lbl">Sports Leagues</span></div>
+    <div class="stat"><span class="stat-num">100+</span><span class="stat-lbl">Athletes</span></div>
+    <div class="stat"><span class="stat-num">All Ages</span><span class="stat-lbl">Welcome</span></div>
+    <div class="stat"><span class="stat-num">Bay Area</span><span class="stat-lbl">Community</span></div>
+  </div>
+
+  <!-- PROGRAMS -->
+  <section class="sports" id="programs">
+    <div class="text-center">
+      <div class="section-tag">What We Offer</div>
+      <h2 class="section-title">Sports Offerings</h2>
+      <p class="section-sub">Something for every kid, every age, every skill level</p>
+    </div>
+    <div class="sport-grid">
+      <div class="sport-card">
+        <div class="sport-icon" style="background:#E8F7FD;">🏈</div>
+        <h3>Flag Football</h3>
+        <p>Exciting leagues for all skill levels — no tackling, all fun. Learn the game in a safe, supportive environment.</p>
+        <span class="age-tag" style="background:#E8F7FD; color:#0A4F72;">Ages 6–17</span>
+      </div>
+      <div class="sport-card">
+        <div class="sport-icon" style="background:#FFEAEA;">⭐</div>
+        <h3>Youth Programs</h3>
+        <p>Building confidence and skills in young athletes. Our coaches are trained to inspire and encourage every child.</p>
+        <span class="age-tag" style="background:#FFEAEA; color:#A32D2D;">Ages 4–12</span>
+      </div>
+      <div class="sport-card">
+        <div class="sport-icon" style="background:#E8F8EF;">👥</div>
+        <h3>Adult Leagues</h3>
+        <p>Competitive and fun leagues for adults in the community. Stay active, make friends, and love the game again.</p>
+        <span class="age-tag" style="background:#E8F8EF; color:#27500A;">Ages 18+</span>
+      </div>
+      <div class="sport-card">
+        <div class="sport-icon" style="background:#FFF3E0;">🎉</div>
+        <h3>Community Events</h3>
+        <p>Fun tournaments, gatherings, and celebrations for the whole family. Bringing the Bay Area together through sports.</p>
+        <span class="age-tag" style="background:#FFF3E0; color:#633806;">All Ages</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION -->
+  <section class="mission" id="mission">
+    <div class="mission-text">
+      <div class="section-tag">Who We Are</div>
+      <h2 class="section-title">Our Mission</h2>
+      <p class="section-sub">Fun, community, and involvement for everyone</p>
+      <p style="font-size:15px; color:#5a7fa0; line-height:1.8; font-weight:600;">
+        At Bay Area Sports Mania, we believe every child — from age 4 to 17 — deserves the chance to discover their passion for sports. We create a positive, inclusive environment where athletes of all skill levels build confidence, make lifelong friendships, and fall in love with the game.
+      </p>
+      <br>
+      <p style="font-size:15px; color:#5a7fa0; line-height:1.8; font-weight:600;">
+        Based in San Jose, we're proud to serve the entire Bay Area community with programs that prioritize fun, safety, and personal growth above everything else.
+      </p>
+      <br>
+      <a href="#contact" class="btn btn-primary" style="margin-top:8px;">Get Your Child Started</a>
+    </div>
+    <div class="mission-visual">
+      <div class="mission-card">
+        <div class="icon">🏅</div>
+        <h4>Safe & Fun</h4>
+        <p>Safety first, fun always</p>
+      </div>
+      <div class="mission-card" style="background:#FFEAEA;">
+        <div class="icon">🤝</div>
+        <h4>Inclusive</h4>
+        <p>Everyone belongs here</p>
+      </div>
+      <div class="mission-card" style="background:#E8F8EF;">
+        <div class="icon">💪</div>
+        <h4>Builds Skills</h4>
+        <p>Grow on and off the field</p>
+      </div>
+      <div class="mission-card" style="background:#FFF3E0;">
+        <div class="icon">🌟</div>
+        <h4>Community</h4>
+        <p>Bay Area proud</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="text-center">
+      <div class="section-tag">Families Love Us</div>
+      <h2 class="section-title">What Parents Say</h2>
+      <p class="section-sub">Real stories from our community</p>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <p>"My son was shy and nervous at first, but within two weeks he had made so many friends and was begging to go to every practice. BASM changed his life!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:#5BC8F5;">MR</div>
+          <div><div class="author-name">Maria R.</div><div class="author-role">Parent, San Jose</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card" style="border-left-color:#FF6B6B;">
+        <p>"The coaches are amazing with kids of all ages. My daughter is 6 and she absolutely loves flag football. I never thought she'd be into sports but here we are!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:#FF6B6B;">JT</div>
+          <div><div class="author-name">James T.</div><div class="author-role">Parent, Santa Clara</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card" style="border-left-color:#7ED8A4;">
+        <p>"I joined the adult league and it's the highlight of my week. Great people, great competition, and the organizers really care about making it fun for everyone."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:#7ED8A4;">AK</div>
+          <div><div class="author-name">Aisha K.</div><div class="author-role">Adult League Player</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACT -->
+  <section class="cta-section" id="contact">
+    <h2>Ready to Join the Team? 🏆</h2>
+    <p>Call us today and get your child signed up for their next great adventure in the Bay Area!</p>
+    <a href="tel:4083146404" class="btn" style="background:#fff; color:#0A4F72; font-size:16px; padding:16px 36px;">Sign Up Now</a>
+    <div class="contact-row">
+      <div class="contact-chip">📞 Daniel: 408-314-6404</div>
+      <div class="contact-chip">📞 Abdullah: 650-754-3762</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">BAY AREA SPORTS MANIA</div>
+    <ul class="footer-links">
+      <li><a href="#programs">Programs</a></li>
+      <li><a href="#mission">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 Bay Area Sports Mania · San Jose, CA</div>
+  </footer>
+
+  <script>
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, i * 100);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.sport-card, .testimonial-card').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Stagger age pills
+    document.querySelectorAll('.age-pill').forEach((pill, i) => {
+      pill.style.animationDelay = `${i * 0.08}s`;
+    });
+  </script>
+
+</body>
+</html>
